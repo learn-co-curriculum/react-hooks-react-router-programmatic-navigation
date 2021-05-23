@@ -1,11 +1,11 @@
 # Programmatic Navigation
 
-## Objectives
+## Learning Goals
 
-1. Describe use cases for programmatic navigation
-2. Access the `history` object using React Router
+- Understand the use cases for programmatic navigation
+- Use the `useHistory` hook to perform programmatic navigation
 
-## Overview
+## Introduction
 
 So far, we've used a couple components from React Router to allow our users to
 navigate our React site: the `NavLink` and `Link` components. However, it would
@@ -29,10 +29,13 @@ To solve this problem, we can use another custom hook from React Router: the
 ```js
 import { useHistory } from "react-router-dom";
 
-function NavBar() {
+function NavBar({ onLogout }) {
   const history = useHistory();
 
   function handleClick() {
+    // logout the user
+    onLogout();
+    // then navigate them to the login page
     history.push("/login");
   }
 
@@ -52,7 +55,7 @@ For another example, here's how you could use `history.push()` to redirect the
 user after logging in:
 
 ```js
-function Login({ setIsLoggedIn }) {
+function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -67,11 +70,19 @@ function Login({ setIsLoggedIn }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    client.post("http://localhost:3001/login", formData).then((user) => {
-      setIsLoggedIn(true);
-      // after logging the user in, redirect to the home page!
-      history.push("/home");
-    });
+    fetch("http://localhost:3001/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((r) => r.json())
+      .then((user) => {
+        onLogin(user);
+        // after logging the user in, redirect to the home page!
+        history.push("/home");
+      });
   }
 
   return (
@@ -114,6 +125,15 @@ function Home({ isSignedIn }) {
   );
 }
 ```
+
+## Conclusion
+
+React Router gives us full control over how to navigate users around our
+website. In general, using the `<Link>` and `<NavLink>` components to let users
+perform navigation by clicking links is preferred; however, there are certain
+scenarios when we want to navigate a user to a new page in addition to some
+other behavior, like submitting a form or logging out. The `useHistory` hook
+helps with theses scenarios.
 
 ## Resources
 
