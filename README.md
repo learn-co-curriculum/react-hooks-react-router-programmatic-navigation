@@ -9,7 +9,7 @@
 
 So far, we've used a couple components from React Router to allow our users to
 navigate our React site: the `NavLink` and `Link` components. However, it would
-also be useful direct our users to another page **without** them needing to
+also be useful to direct our users to another page **without** them needing to
 click a link. For example:
 
 - After logging into the website, direct our user to the home page
