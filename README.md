@@ -26,7 +26,7 @@ the user click on a link.
 To solve this problem, we can use another custom hook from React Router: the
 `useHistory` hook. Here's how it looks:
 
-```js
+```jsx
 import { useHistory } from "react-router-dom";
 
 function NavBar({ onLogout }) {
@@ -54,7 +54,7 @@ link!
 For another example, here's how you could use `history.push()` to redirect the
 user after logging in:
 
-```js
+```jsx
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     username: "",
@@ -112,7 +112,7 @@ component for redirecting users to a new location: the `Redirect` component.
 This component is particularly useful in cases where you need to handle some
 conditional rendering. For example:
 
-```js
+```jsx
 function Home({ isSignedIn }) {
   // if the user isn't signed in, redirect them to the login page
   if (!isSignedIn) return <Redirect to="/login" />;
