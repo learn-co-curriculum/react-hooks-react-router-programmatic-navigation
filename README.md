@@ -129,11 +129,11 @@ function Home({ isSignedIn }) {
 ## Conclusion
 
 React Router gives us full control over how to navigate users around our
-website. In general, using the `<Link>` and `<NavLink>` components to let users
-perform navigation by clicking links is preferred; however, there are certain
-scenarios when we want to navigate a user to a new page in addition to some
-other behavior, like submitting a form or logging out. The `useHistory` hook
-helps with theses scenarios.
+website. In general, the preferred approach is to use the `<Link>` and
+`<NavLink>` components to let users perform navigation by clicking links.
+However, there are certain scenarios when we want to navigate a user to a new
+page after they perform some other type of action, like submitting a form or
+logging out. The `useHistory` hook helps with these scenarios.
 
 ## Resources
 
