@@ -4,6 +4,7 @@
 
 - Understand the use cases for programmatic navigation
 - Use the `useHistory` hook to perform programmatic navigation
+- Use the `<Redirect>` component to perform programmatic navigation
 
 ## Introduction
 
@@ -12,7 +13,7 @@ navigate our React site: the `NavLink` and `Link` components. However, it would
 also be useful to direct our users to another page **without** them needing to
 click a link. For example:
 
-- After logging into the website, direct our user to the home page
+- After logging in to the website, direct our user to the home page
 - After logging out of the website, direct our user to the login page
 - After creating a new item by filling out a form, direct our user to the detail
   page for that item
@@ -133,7 +134,8 @@ website. In general, the preferred approach is to use the `<Link>` and
 `<NavLink>` components to let users perform navigation by clicking links.
 However, there are certain scenarios when we want to navigate a user to a new
 page after they perform some other type of action, like submitting a form or
-logging out. The `useHistory` hook helps with these scenarios.
+logging out. React Router provides two tools to help us with these scenarios:
+the `useHistory` hook and the `<Redirect>` component.
 
 ## Resources
 
