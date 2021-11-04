@@ -139,6 +139,6 @@ the `useHistory` hook and the `<Redirect>` component.
 
 ## Resources
 
-- [React Router Hooks](https://reactrouter.com/web/api/Hooks)
-- [React Router history object](https://reactrouter.com/web/api/history)
-- [Redirect](https://reactrouter.com/web/api/Redirect)
+- [React Router Hooks](https://v5.reactrouter.com/web/api/Hooks)
+- [React Router history object](https://v5.reactrouter.com/web/api/history)
+- [Redirect](https://v5.reactrouter.com/web/api/Redirect)
