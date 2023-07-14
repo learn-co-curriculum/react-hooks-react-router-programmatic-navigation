@@ -3,8 +3,8 @@
 ## Learning Goals
 
 - Understand the use cases for programmatic navigation
-- Use the `useHistory` hook to perform programmatic navigation
-- Use the `<Redirect>` component to perform programmatic navigation
+- Use the `useNavigate` hook to perform programmatic navigation
+- Use the `<Navigate>` component to perform programmatic navigation
 
 ## Introduction
 
@@ -32,22 +32,22 @@ recommend that you read through the lesson first, focusing on understanding how
 programmatic navigation works. Once you've done that, feel free to start up the
 app and explore a (mostly) working example.
 
-## The useHistory Hook
+## The useNavigate Hook
 
 To solve this problem, we can use another custom hook from React Router: the
-`useHistory` hook. Here's how it looks:
+`useNavigate` hook. Here's how it looks:
 
 ```jsx
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function NavBar({ onLogout }) {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   function handleClick() {
     // logout the user
     onLogout();
     // then navigate them to the login page
-    history.push("/login");
+    navigate("/login");
   }
 
   return (
@@ -58,14 +58,16 @@ function NavBar({ onLogout }) {
 }
 ```
 
-By calling `history.push()`, we can effectively navigate the user to a new page
-in response to **any** event in our application, not just when the user clicks a
-link!
+By calling `navigate()` and passing it the route we want to navigate to, we can
+effectively navigate the user to a new page in response to **any** event in our
+application, not just when the user clicks a link!
 
-For another example, here's how you could use `history.push()` to redirect the
-user after logging in:
+For another example, here's how you could use `navigate()` to redirect the user
+after logging in:
 
 ```jsx
+import { useNavigate } from 'react-router-dom';
+
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     username: "",
@@ -92,7 +94,7 @@ function Login({ onLogin }) {
       .then((user) => {
         onLogin(user);
         // after logging the user in, redirect to the home page!
-        history.push("/home");
+        navigate("/home");
       });
   }
 
@@ -118,23 +120,30 @@ function Login({ onLogin }) {
 
 ## The Redirect Component
 
-In addition to the `useHistory` hook, React Router also provides a special
-component for redirecting users to a new location: the `Redirect` component.
+In addition to the `useNavigate` hook, React Router also provides a special
+component for redirecting users to a new location: the `Navigate` component.
 This component is particularly useful in cases where you need to handle some
-conditional rendering. For example:
+conditional rendering. For example, in the App component below, we can render a
+`Navigate` component that will navigate to the `/login` endpoint instead of our
+`NavBar` component if the user is not logged in:
 
 ```jsx
-function Home({ isSignedIn }) {
-  // if the user isn't signed in, redirect them to the login page
-  if (!isSignedIn) return <Redirect to="/login" />;
+import { useState} from "react";
+import { Outlet, Navigate} from "react-router-dom";
+import Navbar from "./components/Navbar";
 
-  // otherwise, return the home page
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <div>
-      <h1>Home!</h1>
+    <div className="app">
+      {isLoggedIn ? <Navbar setIsLoggedIn={setIsLoggedIn}  /> : <Navigate to="/login" />}
+      <Outlet context={{isLoggedIn, setIsLoggedIn}}/>
     </div>
   );
 }
+
+export default App;
 ```
 
 ## Conclusion
@@ -145,10 +154,10 @@ website. In general, the preferred approach is to use the `<Link>` and
 However, there are certain scenarios when we want to navigate a user to a new
 page after they perform some other type of action, like submitting a form or
 logging out. React Router provides two tools to help us with these scenarios:
-the `useHistory` hook and the `<Redirect>` component.
+the `useNavigate` hook and the `<Navigate>` component.
 
 ## Resources
 
-- [React Router Hooks](https://v5.reactrouter.com/web/api/Hooks)
-- [React Router history object](https://v5.reactrouter.com/web/api/history)
-- [Redirect](https://v5.reactrouter.com/web/api/Redirect)
+- [React Router useNavigate](https://reactrouter.com/en/main/hooks/use-navigate)
+- [React Router History](https://reactrouter.com/en/main/start/concepts#history-and-locations)
+- [Navigate](https://reactrouter.com/en/main/components/navigate)
