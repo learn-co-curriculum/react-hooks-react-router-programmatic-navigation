@@ -22,25 +22,19 @@ function Navbar({ setIsLoggedIn }) {
     <div>
       <NavLink
         to="/"
-        /* set exact so it knows to only set activeStyle when route is deeply equal to link */
-        /* add styling to Navlink */
-        style={linkStyles}
-        /* add prop for activeStyle */
-       
+        style={linkStyles} 
       >
         Home
       </NavLink>
       <NavLink
         to="/about"
         style={linkStyles}
-
       >
         About
       </NavLink>
       <NavLink
         to="/login"
         style={linkStyles}
-
       >
         Login
       </NavLink>
