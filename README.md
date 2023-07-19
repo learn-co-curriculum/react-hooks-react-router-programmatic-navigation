@@ -30,29 +30,31 @@ to focus on the specific functionality being explained; and 2) the login/logout
 functionality is mocked in the example app so you don't need to run a server. We
 recommend that you read through the lesson first, focusing on understanding how
 programmatic navigation works. Once you've done that, feel free to start up the
-app and explore a (mostly) working example.
+app and explore our example code.
 
 ## The useNavigate Hook
 
-To solve this problem, we can use another custom hook from React Router: the
-`useNavigate` hook. Here's how it looks:
+To enable programmatic navigation, we can use another custom hook from React
+Router: the `useNavigate` hook. Here's how we could include it in a `NavBar`
+component that allows people to logout of our website with the click of a
+button. Once they've logged out, they'll be redirected to our `/login` page!
 
 ```jsx
 import { useNavigate } from "react-router-dom";
 
-function NavBar({ onLogout }) {
+function NavBar({ logout }) {
   const navigate = useNavigate();
 
-  function handleClick() {
+  function handleLogout() {
     // logout the user
-    onLogout();
+    logout();
     // then navigate them to the login page
     navigate("/login");
   }
 
   return (
     <nav>
-      <button onClick={handleClick}>Logout</button>
+      <button onClick={handleLogout}>Logout</button>
     </nav>
   );
 }
@@ -68,7 +70,7 @@ after logging in:
 ```jsx
 import { useNavigate } from 'react-router-dom';
 
-function Login({ onLogin }) {
+function Login({ login }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -92,7 +94,7 @@ function Login({ onLogin }) {
     })
       .then((r) => r.json())
       .then((user) => {
-        onLogin(user);
+        login(user);
         // after logging the user in, redirect to the home page!
         navigate("/home");
       });
@@ -159,5 +161,6 @@ the `useNavigate` hook and the `<Navigate>` component.
 ## Resources
 
 - [React Router useNavigate](https://reactrouter.com/en/main/hooks/use-navigate)
-- [React Router History](https://reactrouter.com/en/main/start/concepts#history-and-locations)
+- [React Router
+  History](https://reactrouter.com/en/main/start/concepts#history-and-locations)
 - [Navigate](https://reactrouter.com/en/main/components/navigate)
