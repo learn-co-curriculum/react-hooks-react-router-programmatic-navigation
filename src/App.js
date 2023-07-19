@@ -5,10 +5,18 @@ import Navbar from "./components/Navbar";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  const login = () =>{
+    setIsLoggedIn(true)
+  }
+
+  const logout = () =>{
+    setIsLoggedIn(false)
+  }
+
   return (
     <div className="app">
-      {isLoggedIn ? <Navbar setIsLoggedIn={setIsLoggedIn}  /> : <Navigate to="/login" />}
-      <Outlet context={{isLoggedIn, setIsLoggedIn}}/>
+      {isLoggedIn ? <Navbar logout={logout}  /> : <Navigate to="/login" />}
+      <Outlet context={{isLoggedIn, login}}/>
     </div>
   );
 }

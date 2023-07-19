@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 function Login() {
-  const { setIsLoggedIn } = useOutletContext();
+  const { login } = useOutletContext();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
@@ -19,7 +19,7 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    setIsLoggedIn(true);
+    login();
 
     // after logging the user in, redirect to the home page!
     navigate("/");
