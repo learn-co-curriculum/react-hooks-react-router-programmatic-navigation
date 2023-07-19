@@ -16,7 +16,7 @@ function Login() {
     });
   }
 
-  function handleSubmit(e) {
+  function handleLogin(e) {
     e.preventDefault();
 
     login();
@@ -26,7 +26,7 @@ function Login() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleLogin}>
       <h1>Login</h1>
       <input
         type="text"
