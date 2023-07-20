@@ -16,7 +16,7 @@ function Navbar({ logout }) {
   }
 
   return (
-    <div>
+    <nav>
       <NavLink
         to="/"
         style={linkStyles} 
@@ -29,14 +29,8 @@ function Navbar({ logout }) {
       >
         About
       </NavLink>
-      <NavLink
-        to="/login"
-        style={linkStyles}
-      >
-        Login
-      </NavLink>
       <button onClick={handleLogout}>Logout</button>
-    </div>
+    </nav>
   );
 }
 

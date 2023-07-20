@@ -42,13 +42,34 @@ First, we would include some functionality in our `NavBar` component that allows
 people to logout of our website with the click of a button.
 
 ```jsx
+import { NavLink} from "react-router-dom";
 
+const linkStyles = {
+  width: "100px",
+  padding: "12px",
+  margin: "0 6px 6px",
+  background: "blue",
+  textDecoration: "none",
+  color: "white",
+};
 
 function NavBar({ logout }) {
 
   return (
     <nav>
-      <button onClick={logout}>Logout</button>
+      <NavLink
+        to="/"
+        style={linkStyles} 
+      >
+        Home
+      </NavLink>
+      <NavLink
+        to="/about"
+        style={linkStyles}
+      >
+        About
+      </NavLink>
+      <button onClick={handleLogout}>Logout</button>
     </nav>
   );
 }
@@ -194,6 +215,10 @@ function App() {
 
 export default App;
 ```
+
+This means that any user who visits our app and is not logged in will only see
+the login page, and won't be able to use the `NavBar` to navigate to other parts
+of our website.
 
 ## Conclusion
 
