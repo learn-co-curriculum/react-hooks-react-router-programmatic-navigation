@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 
 const linkStyles = {
   width: "100px",
@@ -10,11 +10,9 @@ const linkStyles = {
 };
 
 function Navbar({ logout }) {
-  const navigate = useNavigate();
 
   function handleLogout() {
     logout();
-    navigate("/login");
   }
 
   return (

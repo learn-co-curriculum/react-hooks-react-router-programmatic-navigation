@@ -35,42 +35,85 @@ app and explore our example code.
 ## The useNavigate Hook
 
 To enable programmatic navigation, we can use another custom hook from React
-Router: the `useNavigate` hook. Here's how we could include it in a `NavBar`
-component that allows people to logout of our website with the click of a
-button. Once they've logged out, they'll be redirected to our `/login` page!
+Router: the `useNavigate` hook. Here's how we could include it in our
+application.
+
+First, we would include some functionality in our `NavBar` component that allows
+people to logout of our website with the click of a button.
 
 ```jsx
-import { useNavigate } from "react-router-dom";
+
 
 function NavBar({ logout }) {
-  const navigate = useNavigate();
-
-  function handleLogout() {
-    // logout the user
-    logout();
-    // then navigate them to the login page
-    navigate("/login");
-  }
 
   return (
     <nav>
-      <button onClick={handleLogout}>Logout</button>
+      <button onClick={logout}>Logout</button>
     </nav>
   );
 }
+```
+
+Then, in our `App` component, we can use the `useNavigate` hook and the
+`useEffect` hook to navigate our user to the `/login` page when they logout and
+the home page when they login:
+
+```jsx
+import { useState, useEffect } from "react";
+import { Outlet, Navigate, useNavigate} from "react-router-dom";
+import Navbar from "./components/Navbar";
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate()
+
+  const login = () =>{
+    setIsLoggedIn(true)
+  }
+
+  const logout = () =>{
+    setIsLoggedIn(false)
+  }
+
+  useEffect(() =>{
+    if (isLoggedIn) {
+      navigate("/")
+    } else {
+      navigate("/login")
+    }
+  }, [isLoggedIn])
+
+  return (
+    <div className="app">
+      <Navbar logout={logout} />
+      <Outlet context={login}/>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 By calling `navigate()` and passing it the route we want to navigate to, we can
 effectively navigate the user to a new page in response to **any** event in our
 application, not just when the user clicks a link!
 
-For another example, here's how you could use `navigate()` to redirect the user
-after logging in:
+>**Note:** We placed our call to `navigate` within our `useEffect` because we
+>want to navigate our user _after_ they've successfully logged in or out. By
+>placing the state that dictates whether or not a user is logged in or out
+>within the dependency array of our `useEffect`, we can programmatically
+>navigate our user whenever a change in state occurs. This approach means we
+>only call `navigate` once our state has updated. You don't have to put
+>`navigate` inside of a `useEffect`, but it makes sense to do so in this case.
+
+The code we've set up is now also designed to handle when our user logs in.
+Here's our `Login` component code for reference:
 
 ```jsx
-import { useNavigate } from 'react-router-dom';
+import { useOutletContext } from "react-router-dom";
 
-function Login({ login }) {
+function Login() {
+  const login = useOutletContext();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -83,25 +126,13 @@ function Login({ login }) {
     });
   }
 
-  function handleSubmit(e) {
+  function handleLogin(e) {
     e.preventDefault();
-    fetch("http://localhost:3001/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((r) => r.json())
-      .then((user) => {
-        login(user);
-        // after logging the user in, redirect to the home page!
-        navigate("/home");
-      });
+    login();
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleLogin}>
       <input
         type="text"
         name="username"
@@ -120,27 +151,43 @@ function Login({ login }) {
 }
 ```
 
-## The Redirect Component
+## The Navigate Component
 
 In addition to the `useNavigate` hook, React Router also provides a special
 component for redirecting users to a new location: the `Navigate` component.
 This component is particularly useful in cases where you need to handle some
-conditional rendering. For example, in the App component below, we can render a
-`Navigate` component that will navigate to the `/login` endpoint instead of our
-`NavBar` component if the user is not logged in:
+conditional rendering. For example, in the App component below, instead of
+rendering our `NavBar` component we can render a `Navigate` component that will
+navigate to the `/login` endpoint if the user is not logged in:
 
 ```jsx
-import { useState} from "react";
-import { Outlet, Navigate} from "react-router-dom";
+import { useState, useEffect} from "react";
+import { Outlet, Navigate, useNavigate} from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+   const login = () =>{
+    setIsLoggedIn(true)
+  }
+
+  const logout = () =>{
+    setIsLoggedIn(false)
+  }
+
+  useEffect(() =>{
+    if (isLoggedIn) {
+      navigate("/")
+    } else {
+      navigate("/login")
+    }
+  }, [isLoggedIn])
+
   return (
     <div className="app">
-      {isLoggedIn ? <Navbar setIsLoggedIn={setIsLoggedIn}  /> : <Navigate to="/login" />}
-      <Outlet context={{isLoggedIn, setIsLoggedIn}}/>
+      {isLoggedIn ? <Navbar logout={logout}  /> : <Navigate to="/login" />}
+      <Outlet context={login}/>
     </div>
   );
 }
