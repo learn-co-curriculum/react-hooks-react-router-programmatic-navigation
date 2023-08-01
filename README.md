@@ -98,28 +98,19 @@ Now, we can update our `NavBar` component to handle user logout functionality.
 // NavBar.js
 import { NavLink} from "react-router-dom";
 
-const linkStyles = {
-  width: "100px",
-  padding: "12px",
-  margin: "0 6px 6px",
-  background: "blue",
-  textDecoration: "none",
-  color: "white",
-};
-
-function NavBar({ logout }) {
+function Navbar({ logout }) {
 
   return (
     <nav>
       <NavLink
         to="/"
-        style={linkStyles} 
+        className="nav-link" 
       >
         Home
       </NavLink>
       <NavLink
         to="/about"
-        style={linkStyles}
+        className="nav-link"
       >
         About
       </NavLink>
@@ -128,7 +119,7 @@ function NavBar({ logout }) {
   );
 };
 
-export default NavBar;
+export default Navbar;
 ```
 
 And we can update our `Login` component to handle user login.
