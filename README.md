@@ -48,6 +48,7 @@ Let's update our `App` component to include some programmatic navigation logic,
 as well as some state management logic that mocks user authentication:
 
 ```jsx
+// App.js
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate} from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -125,7 +126,9 @@ function NavBar({ logout }) {
       <button onClick={logout}>Logout</button>
     </nav>
   );
-}
+};
+
+export default NavBar;
 ```
 
 And we can update our `Login` component to handle user login.
@@ -170,7 +173,9 @@ function Login() {
       <input type="submit">Login</input>
     </form>
   );
-}
+};
+
+export default Login;
 ```
 
 ## The Navigate Component
@@ -188,6 +193,7 @@ rendering our `NavBar` component we can render a `Navigate` component that will
 navigate to the `/login` endpoint if the user is not logged in:
 
 ```jsx
+// App.js
 import { useState, useEffect} from "react";
 import { Outlet, Navigate, useNavigate} from "react-router-dom";
 import Navbar from "./components/Navbar";
