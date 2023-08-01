@@ -1,35 +1,23 @@
 import { NavLink} from "react-router-dom";
-
-const linkStyles = {
-  width: "100px",
-  padding: "12px",
-  margin: "0 6px 6px",
-  background: "blue",
-  textDecoration: "none",
-  color: "white",
-};
+import "./Navbar.css"
 
 function Navbar({ logout }) {
-
-  function handleLogout() {
-    logout();
-  }
 
   return (
     <nav>
       <NavLink
         to="/"
-        style={linkStyles} 
+        className="nav-link"
       >
         Home
       </NavLink>
       <NavLink
         to="/about"
-        style={linkStyles}
+        className="nav-link"
       >
         About
       </NavLink>
-      <button onClick={handleLogout}>Logout</button>
+      <button onClick={logout}>Logout</button>
     </nav>
   );
 }
