@@ -125,7 +125,9 @@ function NavBar({ logout }) {
       <button onClick={logout}>Logout</button>
     </nav>
   );
-}
+};
+
+export default NavBar;
 ```
 
 And we can update our `Login` component to handle user login.
@@ -170,7 +172,9 @@ function Login() {
       <input type="submit">Login</input>
     </form>
   );
-}
+};
+
+export default Login;
 ```
 
 ## The Navigate Component
