@@ -9,11 +9,7 @@ const linkStyles = {
   color: "white",
 };
 
-function Navbar({ logout }) {
-
-  function handleLogout() {
-    logout();
-  }
+function Navbar() {
 
   return (
     <nav>
@@ -29,7 +25,6 @@ function Navbar({ logout }) {
       >
         About
       </NavLink>
-      <button onClick={handleLogout}>Logout</button>
     </nav>
   );
 }
