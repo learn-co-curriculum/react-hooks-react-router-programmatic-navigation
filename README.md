@@ -22,15 +22,9 @@ All of these actions require us to use **programmatic navigation** to change the
 browser URL, and show the user a new page in our application, **without** making
 the user click on a link.
 
-**Note:** We have attached some files so you can see an example app in which
-programmatic navigation has been implemented. While the basic functionality is
-the same as what's described below, there are a number of differences for two
-reasons: 1) the code in the lesson is substantially pared down to make it easier
-to focus on the specific functionality being explained; and 2) the login/logout
-functionality is mocked in the example app so you don't need to run a server. We
-recommend that you read through the lesson first, focusing on understanding how
-programmatic navigation works. Once you've done that, feel free to start up the
-app and explore our example code.
+We've included some files for you to code along in as we walk through the
+examples below. The files already have routing set up - we just need to update
+them to include programmitic navigation!
 
 ## The useNavigate Hook
 
@@ -38,50 +32,24 @@ To enable programmatic navigation, we can use another custom hook from React
 Router: the `useNavigate` hook. Here's how we could include it in our
 application.
 
-First, we would include some functionality in our `NavBar` component that allows
-people to logout of our website with the click of a button.
+First, we need to import it into the component in which we want to use it:
+`import { useNavigate } from 'react-router-dom'`. In this case, we'll be
+importing into our `App` component.
 
-```jsx
-import { NavLink} from "react-router-dom";
+Then, we need to invoke our `useNavigate` hook and save the returned function in
+a variable. Let's call that variable `navigate` for simplicity: `const navigate
+= useNavigate()`.
 
-const linkStyles = {
-  width: "100px",
-  padding: "12px",
-  margin: "0 6px 6px",
-  background: "blue",
-  textDecoration: "none",
-  color: "white",
-};
+Now, whenever we want to use programmatic navigation, we'll simply pass the
+route we want to navigate our user to as an argument to the `navigate` function:
+`navigate("/")`.
 
-function NavBar({ logout }) {
-
-  return (
-    <nav>
-      <NavLink
-        to="/"
-        style={linkStyles} 
-      >
-        Home
-      </NavLink>
-      <NavLink
-        to="/about"
-        style={linkStyles}
-      >
-        About
-      </NavLink>
-      <button onClick={handleLogout}>Logout</button>
-    </nav>
-  );
-}
-```
-
-Then, in our `App` component, we can use the `useNavigate` hook and the
-`useEffect` hook to navigate our user to the `/login` page when they logout and
-the home page when they login:
+Let's update our `App` component to include some programmatic navigation logic,
+as well as some state management logic that mocks user authentication:
 
 ```jsx
 import { useState, useEffect } from "react";
-import { Outlet, Navigate, useNavigate} from "react-router-dom";
+import { Outlet, useNavigate} from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -115,22 +83,55 @@ function App() {
 export default App;
 ```
 
-By calling `navigate()` and passing it the route we want to navigate to, we can
-effectively navigate the user to a new page in response to **any** event in our
-application, not just when the user clicks a link!
-
 >**Note:** We placed our call to `navigate` within our `useEffect` because we
 >want to navigate our user _after_ they've successfully logged in or out. By
 >placing the state that dictates whether or not a user is logged in or out
 >within the dependency array of our `useEffect`, we can programmatically
 >navigate our user whenever a change in state occurs. This approach means we
->only call `navigate` once our state has updated. You don't have to put
+>only call `navigate` once our state has updated. You don't always have to put
 >`navigate` inside of a `useEffect`, but it makes sense to do so in this case.
 
-The code we've set up is now also designed to handle when our user logs in.
-Here's our `Login` component code for reference:
+Now, we can update our `NavBar` component to handle user logout functionality.
 
 ```jsx
+// NavBar.js
+import { NavLink} from "react-router-dom";
+
+const linkStyles = {
+  width: "100px",
+  padding: "12px",
+  margin: "0 6px 6px",
+  background: "blue",
+  textDecoration: "none",
+  color: "white",
+};
+
+function NavBar({ logout }) {
+
+  return (
+    <nav>
+      <NavLink
+        to="/"
+        style={linkStyles} 
+      >
+        Home
+      </NavLink>
+      <NavLink
+        to="/about"
+        style={linkStyles}
+      >
+        About
+      </NavLink>
+      <button onClick={logout}>Logout</button>
+    </nav>
+  );
+}
+```
+
+And we can update our `Login` component to handle user login.
+
+```jsx
+// Login.js
 import { useOutletContext } from "react-router-dom";
 
 function Login() {
@@ -166,7 +167,7 @@ function Login() {
         value={formData.password}
         onChange={handleChange}
       />
-      <button type="submit">Login</button>
+      <input type="submit">Login</input>
     </form>
   );
 }
@@ -176,6 +177,11 @@ function Login() {
 
 In addition to the `useNavigate` hook, React Router also provides a special
 component for redirecting users to a new location: the `Navigate` component.
+
+To use the `Navigate` component, we simply invoke it the same way we would
+invoke any other component, then pass it a `to` prop that points toward a route
+endpoint: `<Navigate to="/login" />`.
+
 This component is particularly useful in cases where you need to handle some
 conditional rendering. For example, in the App component below, instead of
 rendering our `NavBar` component we can render a `Navigate` component that will
@@ -225,6 +231,7 @@ of our website.
 React Router gives us full control over how to navigate users around our
 website. In general, the preferred approach is to use the `<Link>` and
 `<NavLink>` components to let users perform navigation by clicking links.
+
 However, there are certain scenarios when we want to navigate a user to a new
 page after they perform some other type of action, like submitting a form or
 logging out. React Router provides two tools to help us with these scenarios:
