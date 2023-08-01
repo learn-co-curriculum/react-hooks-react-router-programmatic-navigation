@@ -36,7 +36,7 @@ function Login() {
         value={formData.password}
         onChange={handleChange}
       />
-      <button type="submit">Login</button>
+      <input type="submit" value="Login"/>
     </form>
   );
 }
