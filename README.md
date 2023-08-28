@@ -23,10 +23,10 @@ browser URL, and show the user a new page in our application, **without** making
 the user click on a link.
 
 We've included some files for you to code along in as we walk through the
-examples below. The files already have routing set up - we just need to update
-them to include programmitic navigation!
+examples below. The files already have routing set up — we just need to update
+them to include programmatic navigation!
 
-## The useNavigate Hook
+## The `useNavigate` Hook
 
 To enable programmatic navigation, we can use another custom hook from React
 Router: the `useNavigate` hook. Here's how we could include it in our
@@ -51,35 +51,35 @@ as well as some state management logic that mocks user authentication:
 // App.js
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate} from "react-router-dom";
-import Navbar from "./components/Navbar";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const login = () =>{
-    setIsLoggedIn(true)
+    setIsLoggedIn(true);
   }
 
   const logout = () =>{
-    setIsLoggedIn(false)
-  }
+    setIsLoggedIn(false);
+  };
 
   useEffect(() =>{
     if (isLoggedIn) {
-      navigate("/")
+      navigate("/");
     } else {
-      navigate("/login")
-    }
-  }, [isLoggedIn])
+      navigate("/login");
+    };
+  }, [isLoggedIn]);
 
   return (
     <div className="app">
-      <Navbar logout={logout} />
+      <NavBar logout={logout} />
       <Outlet context={login}/>
     </div>
   );
-}
+};
 
 export default App;
 ```
@@ -98,7 +98,7 @@ Now, we can update our `NavBar` component to handle user logout functionality.
 // NavBar.js
 import { NavLink} from "react-router-dom";
 
-function Navbar({ logout }) {
+function NavBar({ logout }) {
 
   return (
     <nav>
@@ -119,13 +119,14 @@ function Navbar({ logout }) {
   );
 };
 
-export default Navbar;
+export default NavBar;
 ```
 
 And we can update our `Login` component to handle user login.
 
 ```jsx
 // Login.js
+import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 function Login() {
@@ -140,12 +141,12 @@ function Login() {
       ...formData,
       [e.target.name]: e.target.value,
     });
-  }
+  };
 
   function handleLogin(e) {
     e.preventDefault();
     login();
-  }
+  };
 
   return (
     <form onSubmit={handleLogin}>
@@ -187,18 +188,20 @@ navigate to the `/login` endpoint if the user is not logged in:
 // App.js
 import { useState, useEffect} from "react";
 import { Outlet, Navigate, useNavigate} from "react-router-dom";
-import Navbar from "./components/Navbar";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
 
    const login = () =>{
-    setIsLoggedIn(true)
-  }
+    setIsLoggedIn(true);
+  };
 
   const logout = () =>{
-    setIsLoggedIn(false)
-  }
+    setIsLoggedIn(false);
+  };
 
   useEffect(() =>{
     if (isLoggedIn) {
@@ -210,11 +213,11 @@ function App() {
 
   return (
     <div className="app">
-      {isLoggedIn ? <Navbar logout={logout}  /> : <Navigate to="/login" />}
+      {isLoggedIn ? <NavBar logout={logout}  /> : <Navigate to="/login" />}
       <Outlet context={login}/>
     </div>
   );
-}
+};
 
 export default App;
 ```
