@@ -205,11 +205,11 @@ function App() {
 
   useEffect(() =>{
     if (isLoggedIn) {
-      navigate("/")
+      navigate("/");
     } else {
-      navigate("/login")
+      navigate("/login");
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   return (
     <div className="app">
