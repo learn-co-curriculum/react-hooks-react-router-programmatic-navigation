@@ -2,7 +2,7 @@
 
 ## Learning Goals
 
-- Understand the use cases for programmatic navigation
+- Explain the use cases for programmatic navigation
 - Use the `useNavigate` hook to perform programmatic navigation
 - Use the `<Navigate>` component to perform programmatic navigation
 
@@ -29,18 +29,18 @@ them to include programmatic navigation!
 ## The `useNavigate` Hook
 
 To enable programmatic navigation, we can use another custom hook from React
-Router: the `useNavigate` hook. Here's how we could include it in our
-application.
+Router: the `useNavigate` hook. Using it in our
+application is pretty straightforward:
 
-First, we need to import it into the component in which we want to use it:
-`import { useNavigate } from 'react-router-dom'`. In this case, we'll be
+- First, we import it into the component in which we want to use it;
+in this case, we'll be
 importing into our `App` component.
 
-Then, we need to invoke our `useNavigate` hook and save the returned function in
+- Next, we need to invoke our `useNavigate` hook and save the returned function in
 a variable. Let's call that variable `navigate` for simplicity: `const navigate
 = useNavigate()`.
 
-Now, whenever we want to use programmatic navigation, we'll simply pass the
+- Then, whenever we want to use programmatic navigation, we'll simply pass the
 route we want to navigate our user to as an argument to the `navigate` function:
 `navigate("/")`.
 
@@ -50,11 +50,13 @@ as well as some state management logic that mocks user authentication:
 ```jsx
 // App.js
 import { useState, useEffect } from "react";
+// Add useNavigate to import
 import { Outlet, useNavigate} from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // Add code to mock user authentication
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const login = () =>{
@@ -65,7 +67,8 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  useEffect(() =>{
+    // Add programmatic navigation for login and logout
+    useEffect(() =>{
     if (isLoggedIn) {
       navigate("/");
     } else {
@@ -76,7 +79,8 @@ function App() {
   return (
     <div className="app">
       <NavBar logout={logout} />
-      <Outlet context={login}/>
+    // Pass login function to Outlet as context
+    <Outlet context={login}/>
     </div>
   );
 };
@@ -97,7 +101,7 @@ Now, we can update our `NavBar` component to handle user logout functionality.
 ```jsx
 // NavBar.js
 import { NavLink} from "react-router-dom";
-
+import "./NavBar.css"
 function NavBar({ logout }) {
 
   return (
@@ -114,6 +118,7 @@ function NavBar({ logout }) {
       >
         About
       </NavLink>
+      // Add the logout function to handle the onClick event
       <button onClick={logout}>Logout</button>
     </nav>
   );
@@ -130,6 +135,7 @@ import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 
 function Login() {
+  // Access the login function passed as context
   const login = useOutletContext();
   const [formData, setFormData] = useState({
     username: "",
@@ -143,6 +149,7 @@ function Login() {
     });
   };
 
+  // Create a function that calls the login function when the form is submitted
   function handleLogin(e) {
     e.preventDefault();
     login();
@@ -213,6 +220,7 @@ function App() {
 
   return (
     <div className="app">
+    // Add conditional rendering so users have to be logged in to see pages on the site
       {isLoggedIn ? <NavBar logout={logout}  /> : <Navigate to="/login" />}
       <Outlet context={login}/>
     </div>
