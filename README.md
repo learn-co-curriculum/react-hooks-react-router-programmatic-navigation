@@ -29,16 +29,16 @@ them to include programmatic navigation!
 ## The `useNavigate` Hook
 
 To enable programmatic navigation, we can use another custom hook from React
-Router: the `useNavigate` hook. Using it in our
-application is pretty straightforward:
+Router: the `useNavigate` hook. Using it in our application is pretty
+straightforward:
 
-- First, we import it into the component in which we want to use it;
-in this case, we'll be
-importing into our `App` component.
+- First, we import it into the component in which we want to use it; in this
+case, we'll be importing into our `App` component: `import { useNavigate } from
+"react-router-dom";`.
 
-- Next, we need to invoke our `useNavigate` hook and save the returned function in
-a variable. Let's call that variable `navigate` for simplicity: `const navigate
-= useNavigate()`.
+- Next, we need to invoke our `useNavigate` hook within our component and save
+the returned function in a variable. Let's call that variable `navigate` for
+simplicity: `const navigate = useNavigate()`.
 
 - Then, whenever we want to use programmatic navigation, we'll simply pass the
 route we want to navigate our user to as an argument to the `navigate` function:
@@ -56,7 +56,7 @@ import NavBar from "./components/NavBar";
 
 function App() {
     // Add code to mock user authentication
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const login = () =>{
@@ -68,10 +68,12 @@ function App() {
   };
 
     // Add programmatic navigation for login and logout
-    useEffect(() =>{
+  useEffect(() =>{
     if (isLoggedIn) {
+        // navigates to Home route if user is logged in
       navigate("/");
     } else {
+        // navigates to Login route if user is logged out
       navigate("/login");
     };
   }, [isLoggedIn]);
@@ -79,8 +81,8 @@ function App() {
   return (
     <div className="app">
       <NavBar logout={logout} />
-    // Pass login function to Outlet as context
-    <Outlet context={login}/>
+        { /*Pass login function to Outlet as context */}
+      <Outlet context={login}/>
     </div>
   );
 };
