@@ -41,7 +41,7 @@ the returned function in a variable. Let's call that variable `navigate` for
 simplicity: `const navigate = useNavigate()`.
 
 - Then, whenever we want to use programmatic navigation, we'll simply pass the
-route we want to navigate our user to as an argument to the `navigate` function:
+route we want to navigate our user to as an argument to the `navigate` function.
 `navigate("/")`.
 
 Let's update our `App` component to include some programmatic navigation logic,
@@ -120,7 +120,7 @@ function NavBar({ logout }) {
       >
         About
       </NavLink>
-      // Add the logout function to handle the onClick event
+      {/* Add the logout function to handle the onClick event */}
       <button onClick={logout}>Logout</button>
     </nav>
   );
@@ -222,7 +222,7 @@ function App() {
 
   return (
     <div className="app">
-    // Add conditional rendering so users have to be logged in to see pages on the site
+{/* Add conditional rendering so users have to be logged in to see pages on the site */}
       {isLoggedIn ? <NavBar logout={logout}  /> : <Navigate to="/login" />}
       <Outlet context={login}/>
     </div>
