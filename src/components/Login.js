@@ -19,19 +19,26 @@ function Login() {
 
   return (
     <form onSubmit={handleLogin}>
-      <h1>Login</h1>
-      <input
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
+      <label for="username">Username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      </div>
+      <label for="password">Password</label>
+      <div>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />      
+      </div>
       <button type="submit">Login</button>
     </form>
   );

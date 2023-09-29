@@ -2,9 +2,9 @@
 
 ## Learning Goals
 
-- Explain the use cases for programmatic navigation
-- Use the `useNavigate` hook to perform programmatic navigation
-- Use the `<Navigate>` component to perform programmatic navigation
+- Explain the use cases for programmatic navigation.
+- Use the `useNavigate` hook to perform programmatic navigation.
+- Use the `<Navigate>` component to perform programmatic navigation.
 
 ## Introduction
 
@@ -159,20 +159,28 @@ function Login() {
 
   return (
     <form onSubmit={handleLogin}>
-      <input
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
-      <input type="submit">Login</input>
-    </form>
+      <label for="username">Username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      </div>
+      <label for="password">Password</label>
+      <div>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />      
+      </div>
+      <button type="submit">Login</button>
+  </form>
   );
 };
 
