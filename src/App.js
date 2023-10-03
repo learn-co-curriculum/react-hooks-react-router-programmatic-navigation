@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Outlet, Navigate, useNavigate} from "react-router-dom";
-import Navbar from "./components/NavBar";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

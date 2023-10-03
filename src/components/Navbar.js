@@ -1,7 +1,7 @@
 import { NavLink} from "react-router-dom";
-import "./Navbar.css"
+import "./NavBar.css"
 
-function Navbar({ logout }) {
+function NavBar({ logout }) {
 
   return (
     <nav>
@@ -22,4 +22,4 @@ function Navbar({ logout }) {
   );
 }
 
-export default Navbar;
+export default NavBar;
