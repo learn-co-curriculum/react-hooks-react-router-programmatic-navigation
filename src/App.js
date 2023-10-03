@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div className="app">
-      {isLoggedIn ? <Navbar logout={logout}  /> : <Navigate to="/login" />}
+      {isLoggedIn ? <NavBar logout={logout}  /> : <Navigate to="/login" />}
       <Outlet context={login}/>
     </div>
   );
