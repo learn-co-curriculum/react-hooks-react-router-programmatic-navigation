@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
 
-function Login({ setIsLoggedIn }) {
-  const history = useHistory();
+function Login() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -15,30 +13,32 @@ function Login({ setIsLoggedIn }) {
     });
   }
 
-  function handleSubmit(e) {
+  function handleLogin(e) {
     e.preventDefault();
-
-    setIsLoggedIn(true);
-
-    // after logging the user in, redirect to the home page!
-    history.push("/");
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
-      <input
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-      />
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
+    <form onSubmit={handleLogin}>
+      <label for="username">Username</label>
+      <div>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      </div>
+      <label for="password">Password</label>
+      <div>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />      
+      </div>
       <button type="submit">Login</button>
     </form>
   );
