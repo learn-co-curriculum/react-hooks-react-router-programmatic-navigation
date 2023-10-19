@@ -1,4 +1,4 @@
-# Programmatic Navigation Code-Along (v5)
+# Programmatic Navigation (v5)
 
 ## Learning Goals
 
